@@ -8,6 +8,7 @@ Building kernel from local
 #### How to use this scripts ####
 ```
 This script has most of it's stuffs in "Basic Information" part. In a nutshell,
+
 	DEFCONFIG - To build a kernel, you need a defconfig. It defines the defconfig which
                      you will need to build kernel. In case your source has the defconfig 
                      inside /arch/arm64/configs/vendor , then you need to set it as
