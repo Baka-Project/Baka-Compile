@@ -8,6 +8,7 @@
 ```sh
 $ git clone https://github/Baka-Project/Baka-Compile.git
 ```
+  
   * 1. copy file compile-gcc or compile-clang or both to your directory kernel
   * 2.`bash compile-gcc` for gcc build
   * 3.`bash compile-clang` for clang build
