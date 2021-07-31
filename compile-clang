@@ -18,10 +18,14 @@
  #
 
 # main
-DEFCONFIG="" 
-USER="" 
-HOST="" 
-CLANG=""
+echo -e "type your defconfig here: "
+read -e DEFCONFIG 
+echo -e "type your user kbuild here: "
+read -e USER
+echo -e "type your host kbuild here: "
+read -e HOST 
+echo -e "type your path folder clang here: "
+read -e CLANG
 # export user and host
 export KBUILD_BUILD_USER=$USER
 export KBUILD_BUILD_HOST=$HOST

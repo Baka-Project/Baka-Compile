@@ -18,11 +18,16 @@
  #
 
 # main
-DEFCONFIG="" 
-ARM64="" 
-ARM32="" 
-USER="" 
-HOST="" 	
+echo -e "type your defconfig here: "
+read -e DEFCONFIG
+echo -e "type your user kbuild here: "
+read -e USER
+echo -e "type your host kbuild here: "
+read -e HOST
+echo -e "type your path folder gcc ARM64 here: "
+read -e ARM64
+echo -e "type your path folder gcc ARM32 here: "
+read -e ARM32
 # export user and host
 export KBUILD_BUILD_USER=$USER
 export KBUILD_BUILD_HOST=$HOST
