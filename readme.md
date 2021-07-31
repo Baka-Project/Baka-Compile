@@ -2,7 +2,7 @@
 <img src="img/baka-compiler.png" />
 
 # Kernel building script
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/1a6455335fe040329a160fad3c6de17c)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Baka-Project/Baka-Compile&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/1a6455335fe040329a160fad3c6de17c)](https://www.codacy.com/gh/Baka-Project/Baka-Compile/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Baka-Project/Baka-Compile&amp;utm_campaign=Badge_Grade)
 
 **Installasion**
 ```sh
