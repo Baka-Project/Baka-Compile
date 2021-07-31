@@ -3,6 +3,8 @@
 
 # Kernel building script
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/470edf0d2b874a7ca06a31cf5b21a41e)](https://app.codacy.com/gh/Baka-Project/Baka-Compile?utm_source=github.com&utm_medium=referral&utm_content=Baka-Project/Baka-Compile&utm_campaign=Badge_Grade_Settings)
+
 
 **Installasion**
 ```sh
