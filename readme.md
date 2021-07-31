@@ -1,11 +1,12 @@
 # Kernel building script
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/1a6455335fe040329a160fad3c6de17c)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Baka-Project/Baka-Compile&amp;utm_campaign=Badge_Grade)
 
-#### Features of this script : ####
+**Features of this script**
 ```
 Building kernel from local
 ```
 
-#### How to use this scripts ####
+**How to use this scripts**
 ```
 This script has most of it's stuffs in "Basic Information" part. In a nutshell,
 
