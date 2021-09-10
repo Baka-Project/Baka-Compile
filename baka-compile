@@ -1,0 +1,101 @@
+#!/bin/bash
+
+\*
+  # Email vcyzscape@gmail.com
+  # Github github,com/vcyzteen
+  # Copyright (c) 2021 vcyzteen <vcyzscape@gmail.com>
+*/
+
+# Bail out on any unhandled errors
+set -e;
+
+# Check Version
+VERSION='0.0.1'
+
+# Environment
+DEFCONFIG="" 
+USER="" 
+HOST="" 
+
+# Path Gcc Folder
+ARM64=""
+ARM32=""
+
+# Path Clang Folder
+CLANG=""
+
+# Export Host Variable
+export KBUILD_BUILD_USER=$USER
+export KBUILD_BUILD_HOST=$HOST
+
+function script_version() {
+	echo "$VERSION"
+}
+
+function version() {
+	echo "script version: $(script_version)"
+}
+
+function usage() {
+	version
+	cat <<EOHELP
+Script build kernel.
+Usage:  $(basename $0) [options] All contents
+  --clang
+      set build kernel with toolchain clang
+  --gcc
+      set build kernel with toolchain gcc
+  --version
+	    show script builder version
+  -h, --help
+	    display this help screen
+EOHELP
+	exit 0
+}
+
+# Argument parsing
+
+while [[ "${1:0:1}" = "-" ]]; do
+	case $1 in
+		-h | --help)
+			usage;;
+		--clang)
+		    function clang() {
+                            make -j$(nproc) O=out ARCH=arm64 $DEFCONFIG
+                            make -j$(nproc) ARCH=arm64 O=out \
+			                    CC=$CLANG/clang \
+			                    LD=$CLANG/ld.lld \
+			                    AR=$CLANG/llvm-ar \
+			                    NM=$CLANG/llvm-nm \
+			                    OBJCOPY=$CLANG/llvm-objcopy \
+			                    OBJDUMP=$CLANG/llvm-objdump \
+			                    STRIP=$CLANG/llvm-strip \
+			                    CROSS_COMPILE=$CLANG/aarch64-linux-gnu- \
+			                    CROSS_COMPILE_ARM32=$CLANG/arm-linux-gnueabi-
+            }
+            echo "Starting Build Use Clang"
+            clang
+		    exit 0;;
+		--gcc)
+            # start compile
+            function gcc() {
+                  make -j$(nproc) O=out ARCH=arm64 $DEFCONFIG
+                  make -j$(nproc) ARCH=arm64 O=out \
+                                  CROSS_COMPILE=$ARM64/aarch64-linux-gnu- \
+                                  CROSS_COMPILE_ARM32=$ARM32/arm-linux-androideabi-
+            }
+		    echo "Starting Build Use GCC"
+		    gcc
+		    exit 0;;
+		--version)
+			version; exit 0;;
+		*)
+		    echo "Unknown option: $1. Run 'baka-compile --help' for help."
+		exit 1;;
+    esac
+done
+
+if [[ -z "$2" ]]; then
+	echo "Not enough arguments. Run 'baka-compile --help' for help."
+	exit 1
+fi
