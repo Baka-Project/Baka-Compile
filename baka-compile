@@ -1,10 +1,8 @@
 #!/bin/bash
 
-\*
   # Email vcyzscape@gmail.com
   # Github github,com/vcyzteen
   # Copyright (c) 2021 vcyzteen <vcyzscape@gmail.com>
-/*
 
 # Bail out on any unhandled errors
 set -e;
@@ -42,9 +40,9 @@ function usage() {
 Script build kernel.
 Usage:  $(basename $0) [options] All contents
   --clang
-      set build kernel with toolchain clang
+        set build kernel with toolchain clang
   --gcc
-      set build kernel with toolchain gcc
+        set build kernel with toolchain gcc
   --version
 	    show script builder version
   -h, --help
