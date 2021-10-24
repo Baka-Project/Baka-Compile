@@ -5,7 +5,7 @@
   # Copyright (c) 2021 vcyzteen <vcyzscape@gmail.com>
 
 # Bail out on any unhandled errors
-set -eou;
+set -e;
 
 # Check Version
 VERSION='0.0.2'
@@ -63,6 +63,7 @@ while [[ "${1:0:1}" = "-" ]]; do
                             export KBUILD_BUILD_HOST=$HOST
                     }
 		    function clang() {
+                            echo -e "Starting Build Use Clang"
                             make -j$(nproc) O=out ARCH=arm64 $DEFCONFIG
                             make -j$(nproc) ARCH=arm64 O=out \
 			                    CC=$CLANG/clang \
@@ -75,7 +76,6 @@ while [[ "${1:0:1}" = "-" ]]; do
 			                    CROSS_COMPILE=$CLANG/aarch64-linux-gnu- \
 			                    CROSS_COMPILE_ARM32=$CLANG/arm-linux-gnueabi-
                     }
-                    echo "Starting Build Use Clang"
                     clangpath
                     def1
                     host1
@@ -107,7 +107,7 @@ while [[ "${1:0:1}" = "-" ]]; do
                             export KBUILD_BUILD_HOST=$HOST
                     }
                     function gcc() {
-                            echo "Starting Build Use GCC"
+                            echo -e "Starting Build Use GCC"
                             make -j$(nproc) O=out ARCH=arm64 $DEFCONFIG
                             make -j$(nproc) ARCH=arm64 O=out \
                                             CROSS_COMPILE=$ARM64/aarch64-linux-gnu- \
