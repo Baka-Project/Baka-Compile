@@ -84,9 +84,11 @@ while [[ "${1:0:1}" = "-" ]]; do
                     clang
 		    exit 0;;
 		--gcc)
-                    function gccpath() {
+                    function gccpatharm64() {
                             echo -e "\e[33mPath To ARM64 Folder GCC!\e[0m"
                             read -e ARM64
+                    }
+                    function gccpatharm32() {
                             echo -e "\e[33mPath To ARM32 Folder GCC!\e[0m"
                             read -e ARM32
                     }
@@ -113,7 +115,8 @@ while [[ "${1:0:1}" = "-" ]]; do
                                             CROSS_COMPILE=$ARM64/aarch64-linux-gnu- \
                                             CROSS_COMPILE_ARM32=$ARM32/arm-linux-androideabi-
                     }
-                    gccpath
+                    gccpatharm64
+                    gccpatharm32
                     def2
                     host2
                     user2
