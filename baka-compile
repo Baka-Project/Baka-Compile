@@ -5,7 +5,7 @@
   # Copyright (c) 2021 vcyzteen <vcyzscape@gmail.com>
 
 # Bail out on any unhandled errors
-set -e;
+set -eou;
 
 # Check Version
 VERSION='0.0.2'
@@ -43,15 +43,19 @@ while [[ "${1:0:1}" = "-" ]]; do
 			usage;;
 		--clang)
                     function clangpath() {
+                            echo -e "\e[33mPath To Folder CLANG!\e[0m"
                             read -e CLANG
                     }
                     function def1() {
+                            echo -e "\e[33mDefconfig Kernel!\e[0m"
                             read -e DEFCONFIG
                     }
                     function host1() {
+                            echo -e "\e[33mHost Compiler!\e[0m"
                             read -e HOST
                     }
                     function user1() {
+                            echo -e "\e[33mUser Compiler!\e[0m"
                             read -e USER
                     }
                     function export1() {
@@ -81,18 +85,21 @@ while [[ "${1:0:1}" = "-" ]]; do
 		    exit 0;;
 		--gcc)
                     function gccpath() {
-                            if [[ ARM64 && ARM32 ]]:
-                            then
-                                 read -e $1
-                            fi
+                            echo -e "\e[33mPath To ARM64 Folder GCC!\e[0m"
+                            read -e ARM64
+                            echo -e "\e[33mPath To ARM32 Folder GCC!\e[0m"
+                            read -e ARM32
                     }
                     function def2() {
+                            echo -e "\e[33mDefconfig Kernel!\e[0m"
                             read -e DEFCONFIG
                     }
                     function host2() {
+                            echo -e "\e[33mHost Compiler!\e[0m"
                             read -e HOST
                     }
                     function user2() {
+                            echo -e "\e[33mUser Compiler!\e[0m"
                             read -e USER
                     }
                     function export2() {
@@ -100,12 +107,12 @@ while [[ "${1:0:1}" = "-" ]]; do
                             export KBUILD_BUILD_HOST=$HOST
                     }
                     function gcc() {
+                            echo "Starting Build Use GCC"
                             make -j$(nproc) O=out ARCH=arm64 $DEFCONFIG
                             make -j$(nproc) ARCH=arm64 O=out \
                                             CROSS_COMPILE=$ARM64/aarch64-linux-gnu- \
                                             CROSS_COMPILE_ARM32=$ARM32/arm-linux-androideabi-
                     }
-		    echo "Starting Build Use GCC"
                     gccpath
                     def2
                     host2
