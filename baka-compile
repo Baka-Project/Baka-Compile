@@ -7,24 +7,7 @@
 # Bail out on any unhandled errors
 set -e;
 
-# Check Version
-VERSION='0.0.1'
-
-# Environment
-DEFCONFIG="" 
-USER="" 
-HOST="" 
-
-# Path Gcc Folder
-ARM64=""
-ARM32=""
-
-# Path Clang Folder
-CLANG=""
-
-# Export Host Variable
-export KBUILD_BUILD_USER=$USER
-export KBUILD_BUILD_HOST=$HOST
+# Chec
 
 function script_version() {
 	echo "$VERSION"
@@ -58,6 +41,22 @@ while [[ "${1:0:1}" = "-" ]]; do
 		-h | --help)
 			usage;;
 		--clang)
+                    function clangpath() {
+                            read -e CLANG
+                    }
+                    function def1() {
+                            read -e DEFCONFIG
+                    }
+                    function host1() {
+                            read -e HOST
+                    }
+                    function user1() {
+                            read -e USER
+                    }
+                    function export1() {
+                            export KBUILD_BUILD_USER=$USER
+                            export KBUILD_BUILD_HOST=$HOST
+                    }
 		    function clang() {
                             make -j$(nproc) O=out ARCH=arm64 $DEFCONFIG
                             make -j$(nproc) ARCH=arm64 O=out \
@@ -70,19 +69,46 @@ while [[ "${1:0:1}" = "-" ]]; do
 			                    STRIP=$CLANG/llvm-strip \
 			                    CROSS_COMPILE=$CLANG/aarch64-linux-gnu- \
 			                    CROSS_COMPILE_ARM32=$CLANG/arm-linux-gnueabi-
-            }
-            echo "Starting Build Use Clang"
-            clang
+                    }
+                    echo "Starting Build Use Clang"
+                    clangpath
+                    def1
+                    host1
+                    user1
+                    export1
+                    clang
 		    exit 0;;
 		--gcc)
-            # start compile
-            function gcc() {
-                  make -j$(nproc) O=out ARCH=arm64 $DEFCONFIG
-                  make -j$(nproc) ARCH=arm64 O=out \
-                                  CROSS_COMPILE=$ARM64/aarch64-linux-gnu- \
-                                  CROSS_COMPILE_ARM32=$ARM32/arm-linux-androideabi-
-            }
+                    function gccpath() {
+                            if [[ ARM64 && ARM32 ]]:
+                            then
+                                 read -e $1
+                    }
+                    function def2() {
+                            read -e DEFCONFIG
+                    }
+                    function host2() {
+                            read -e HOST
+                    }
+                    function user2() {
+                            read -e USER
+                    }
+                    function export2() {
+                            export KBUILD_BUILD_USER=$USER
+                            export KBUILD_BUILD_HOST=$HOST
+                    }
+                    function gcc() {
+                            make -j$(nproc) O=out ARCH=arm64 $DEFCONFIG
+                            make -j$(nproc) ARCH=arm64 O=out \
+                                            CROSS_COMPILE=$ARM64/aarch64-linux-gnu- \
+                                            CROSS_COMPILE_ARM32=$ARM32/arm-linux-androideabi-
+                    }
 		    echo "Starting Build Use GCC"
+                    gccpath
+                    def2
+                    host2
+                    user2
+                    export2
 		    gcc
 		    exit 0;;
 		--version)
