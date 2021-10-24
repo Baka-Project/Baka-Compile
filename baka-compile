@@ -7,7 +7,8 @@
 # Bail out on any unhandled errors
 set -e;
 
-# Chec
+# Check Version
+VERSION='0.0.2'
 
 function script_version() {
 	echo "$VERSION"
