@@ -8,20 +8,19 @@
 
 **Installasion**
 ```sh
-$ git clone https://github/Baka-Project/Baka-Compile.git
+$ wget https://raw.githubusercontent.com/Baka-Project/Baka-Compile/baka/baka-compile
 ```
 
-* open file and edit
+* copy file to your directory kernel
+* `bash baka-compile --gcc` for gcc build
+* `bash baka-compile --clang` for clang build
+* write as
     * DEFCONFIG # defconfig your main kernel
     * HOST      # whatever you need to name
     * USER      # whatever you need to name
     * CLANG     # path the clang folder
     * ARM64     # path the gcc arm64 folder
     * ARM32     # path the gcc arm32 folder
-
-* copy file to your directory kernel
-* `bash baka-compile --gcc` for gcc build
-* `bash baka-compile --clang` for clang build
 
 **Features of this script**
 ```
