@@ -1,10 +1,15 @@
-# Run a couple of linters on code in repo
-# * shellcheck and shfmt for shell scripts
-# * YAPF for Python scripts
-name: Lint checks
-on: [push, pull_request]
+on:
+  push:
+    branch:
+      - master
+
+name: 'Trigger: Push action'
+
 jobs:
   shellcheck:
-    uses: Baka-Compile/actions-workflows/.github/workflows/shellcheck.yml@main
-  shfmt:
-    uses: Baka-Compile/actions-workflows/.github/workflows/shfmt.yml@main
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run ShellCheck
+      uses: ludeeus/action-shellcheck@master
