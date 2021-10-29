@@ -15,9 +15,5 @@ jobs:
       uses: ludeeus/action-shellcheck@master
       with:
        scandir: 'bash baka-compile --gcc'
-    steps:
-    - uses: actions/checkout@v2
-    - name: Run ShellCheck
-      uses: ludeeus/action-shellcheck@master
       with:
        scandir: 'bash baka-compile --clang'
