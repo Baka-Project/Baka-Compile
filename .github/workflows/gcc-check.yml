@@ -15,5 +15,3 @@ jobs:
       uses: ludeeus/action-shellcheck@master
       with:
        scandir: 'bash baka-compile --gcc'
-      with:
-       scandir: 'bash baka-compile --clang'
