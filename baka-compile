@@ -5,7 +5,12 @@
   # Copyright (c) 2021 vcyzteen <vcyzscape@gmail.com>
 
 # Bail out on any unhandled errors
-set -e;
+set -eo;
+
+# Function to show an informational message
+msg() {
+    echo -e "\e[1;32m$*\e[0m"
+}
 
 # Check Version
 VERSION='0.0.2'
@@ -42,28 +47,37 @@ while [[ "${1:0:1}" = "-" ]]; do
 		-h | --help)
 			usage;;
 		--clang)
-                    function clangpath() {
-                            echo -e "\e[33mPath To Folder CLANG!\e[0m"
+                    function clang() {
+                            # folder
+                            msg "\e[33mPath To Folder CLANG!\e[0m"
                             read -e CLANG
-                    }
-                    function def1() {
-                            echo -e "\e[33mDefconfig Kernel!\e[0m"
+      
+                            # defconfig
+                            msg "\e[33mDefconfig Kernel!\e[0m"
                             read -e DEFCONFIG
-                    }
-                    function host1() {
-                            echo -e "\e[33mHost Compiler!\e[0m"
+
+                            # host
+                            msg "\e[33mHost Compiler!\e[0m"
                             read -e HOST
-                    }
-                    function user1() {
-                            echo -e "\e[33mUser Compiler!\e[0m"
+
+                            # user                    
+                            msg "\e[33mUser Compiler!\e[0m"
                             read -e USER
-                    }
-                    function export1() {
+
+                            # exports
                             export KBUILD_BUILD_USER=$USER
                             export KBUILD_BUILD_HOST=$HOST
-                    }
-		    function clang() {
-                            echo -e "Starting Build Use Clang"
+
+                            # start built
+                            sleep 1
+                            msg "Starting Build Use Clang"
+                            sleep 1
+                            msg "..."
+                            sleep 1
+                            msg ".."
+                            sleep 1
+                            msg "."
+                            sleep 2
                             make -j$(nproc) O=out ARCH=arm64 $DEFCONFIG
                             make -j$(nproc) ARCH=arm64 O=out \
 			                    CC=$CLANG/clang \
@@ -76,51 +90,49 @@ while [[ "${1:0:1}" = "-" ]]; do
 			                    CROSS_COMPILE=$CLANG/aarch64-linux-gnu- \
 			                    CROSS_COMPILE_ARM32=$CLANG/arm-linux-gnueabi-
                     }
-                    clangpath
-                    def1
-                    host1
-                    user1
-                    export1
                     clang
 		    exit 0;;
 		--gcc)
-                    function gccpatharm64() {
-                            echo -e "\e[33mPath To ARM64 Folder GCC!\e[0m"
+                    function gcc() {
+                            # folder arm64
+                            msg "\e[33mPath To ARM64 Folder GCC!\e[0m"
                             read -e ARM64
-                    }
-                    function gccpatharm32() {
-                            echo -e "\e[33mPath To ARM32 Folder GCC!\e[0m"
+
+                            # folder arm32
+                            msg "\e[33mPath To ARM32 Folder GCC!\e[0m"
                             read -e ARM32
-                    }
-                    function def2() {
-                            echo -e "\e[33mDefconfig Kernel!\e[0m"
+
+                            # defconfig
+                            msg "\e[33mDefconfig Kernel!\e[0m"
                             read -e DEFCONFIG
-                    }
-                    function host2() {
-                            echo -e "\e[33mHost Compiler!\e[0m"
+
+                            # host
+                            msg "\e[33mHost Compiler!\e[0m"
                             read -e HOST
-                    }
-                    function user2() {
-                            echo -e "\e[33mUser Compiler!\e[0m"
+
+                            # user
+                            msg "\e[33mUser Compiler!\e[0m"
                             read -e USER
-                    }
-                    function export2() {
+
+                            # exports
                             export KBUILD_BUILD_USER=$USER
                             export KBUILD_BUILD_HOST=$HOST
-                    }
-                    function gcc() {
-                            echo -e "Starting Build Use GCC"
+
+                            # start built
+                            sleep 1
+                            msg "Starting Build Use GCC"
+                            sleep 1
+                            msg "..."
+                            sleep 1
+                            msg ".."
+                            sleep 1
+                            msg "."
+                            sleep 2
                             make -j$(nproc) O=out ARCH=arm64 $DEFCONFIG
                             make -j$(nproc) ARCH=arm64 O=out \
                                             CROSS_COMPILE=$ARM64/aarch64-linux-gnu- \
                                             CROSS_COMPILE_ARM32=$ARM32/arm-linux-androideabi-
                     }
-                    gccpatharm64
-                    gccpatharm32
-                    def2
-                    host2
-                    user2
-                    export2
 		    gcc
 		    exit 0;;
 		--version)
