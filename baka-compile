@@ -5,7 +5,7 @@
   # Copyright (c) 2021 vcyzteen <vcyzscape@gmail.com>
 
 # Bail out on any unhandled errors
-set -eo;
+set -e;
 
 # Function to show an informational message
 msg() {
@@ -49,19 +49,19 @@ while [[ "${1:0:1}" = "-" ]]; do
 		--clang)
                     function clang() {
                             # folder
-                            msg "\e[33mPath To Folder CLANG!\e[0m"
+                            msg "Path To Folder CLANG!"
                             read -e CLANG
       
                             # defconfig
-                            msg "\e[33mDefconfig Kernel!\e[0m"
+                            msg "Defconfig Kernel!"
                             read -e DEFCONFIG
 
                             # host
-                            msg "\e[33mHost Compiler!\e[0m"
+                            msg "Host Compiler!"
                             read -e HOST
 
                             # user                    
-                            msg "\e[33mUser Compiler!\e[0m"
+                            msg "User Compiler!"
                             read -e USER
 
                             # exports
@@ -95,23 +95,23 @@ while [[ "${1:0:1}" = "-" ]]; do
 		--gcc)
                     function gcc() {
                             # folder arm64
-                            msg "\e[33mPath To ARM64 Folder GCC!\e[0m"
+                            msg "Path To ARM64 Folder GCC!"
                             read -e ARM64
 
                             # folder arm32
-                            msg "\e[33mPath To ARM32 Folder GCC!\e[0m"
+                            msg "Path To ARM32 Folder GCC!"
                             read -e ARM32
 
                             # defconfig
-                            msg "\e[33mDefconfig Kernel!\e[0m"
+                            msg "Defconfig Kernel!"
                             read -e DEFCONFIG
 
                             # host
-                            msg "\e[33mHost Compiler!\e[0m"
+                            msg "Host Compiler!"
                             read -e HOST
 
                             # user
-                            msg "\e[33mUser Compiler!\e[0m"
+                            msg "User Compiler!"
                             read -e USER
 
                             # exports
