@@ -1,149 +1,90 @@
 #!/bin/bash
 
-  # Email vcyzscape@gmail.com
-  # Github github,com/vcyzteen
-  # Copyright (c) 2021 vcyzteen <vcyzscape@gmail.com>
-
-# Bail out on any unhandled errors
-set -e;
-
-# Function to show an informational message
-msg() {
-    echo -e "\e[1;32m$*\e[0m"
-}
-
-# Check Version
-VERSION='0.0.2'
-
-function script_version() {
-	echo "$VERSION"
-}
-
-function version() {
-	echo "script version: $(script_version)"
-}
+  # Email xealea@proton.me
+  # Github github,com/xealea
+  # Copyright (c) 2023 xealea <xealea@proton.me>
 
 function usage() {
-	version
-	cat <<EOHELP
+    version
+    cat <<EOHELP
 Script build kernel.
 Usage:  $(basename $0) [options] All contents
-  --clang
-        set build kernel with toolchain clang
-  --gcc
-        set build kernel with toolchain gcc
-  --version
-	    show script builder version
-  -h, --help
-	    display this help screen
+  --clang      set build kernel with toolchain clang
+  --gcc        set build kernel with toolchain gcc
+  --version    show script builder version
+  -h, --help   display this help screen
 EOHELP
-	exit 0
+    exit 0
 }
 
-# Argument parsing
+function set_env_vars() {
+    msg "Defconfig Kernel!"
+    read -e DEFCONFIG
+
+    msg "Host Compiler!"
+    read -e HOST
+
+    msg "User Compiler!"
+    read -e USER
+
+    export KBUILD_BUILD_USER=$USER
+    export KBUILD_BUILD_HOST=$HOST
+}
+
+function clang() {
+    msg "Path To Folder CLANG!"
+    read -e CLANG
+
+    set_env_vars
+
+    make -j$(nproc) O=out ARCH=arm64 $DEFCONFIG
+    make -j$(nproc) ARCH=arm64 O=out \
+        CC=$CLANG/clang \
+        LD=$CLANG/ld.lld \
+        AR=$CLANG/llvm-ar \
+        NM=$CLANG/llvm-nm \
+        OBJCOPY=$CLANG/llvm-objcopy \
+        OBJDUMP=$CLANG/llvm-objdump \
+        STRIP=$CLANG/llvm-strip \
+        CROSS_COMPILE=$CLANG/aarch64-linux-gnu- \
+        CROSS_COMPILE_ARM32=$CLANG/arm-linux-gnueabi-
+}
+
+function gcc() {
+    msg "Path To ARM64 Folder GCC!"
+    read -e ARM64
+
+    msg "Path To ARM32 Folder GCC!"
+    read -e ARM32
+
+    set_env_vars
+
+    make -j$(nproc) O=out ARCH=arm64 $DEFCONFIG
+    make -j$(nproc) ARCH=arm64 O=out \
+        CROSS_COMPILE=$ARM64/aarch64-linux-gnu- \
+        CROSS_COMPILE_ARM32=$ARM32/arm-linux-androideabi-
+}
 
 while [[ "${1:0:1}" = "-" ]]; do
-	case $1 in
-		-h | --help)
-			usage;;
-		--clang)
-                    function clang() {
-                            # folder
-                            msg "Path To Folder CLANG!"
-                            read -e CLANG
-      
-                            # defconfig
-                            msg "Defconfig Kernel!"
-                            read -e DEFCONFIG
-
-                            # host
-                            msg "Host Compiler!"
-                            read -e HOST
-
-                            # user                    
-                            msg "User Compiler!"
-                            read -e USER
-
-                            # exports
-                            export KBUILD_BUILD_USER=$USER
-                            export KBUILD_BUILD_HOST=$HOST
-
-                            # start built
-                            sleep 1
-                            msg "Starting Build Use Clang"
-                            sleep 1
-                            msg "..."
-                            sleep 1
-                            msg ".."
-                            sleep 1
-                            msg "."
-                            sleep 2
-                            make -j$(nproc) O=out ARCH=arm64 $DEFCONFIG
-                            make -j$(nproc) ARCH=arm64 O=out \
-			                    CC=$CLANG/clang \
-			                    LD=$CLANG/ld.lld \
-			                    AR=$CLANG/llvm-ar \
-			                    NM=$CLANG/llvm-nm \
-			                    OBJCOPY=$CLANG/llvm-objcopy \
-			                    OBJDUMP=$CLANG/llvm-objdump \
-			                    STRIP=$CLANG/llvm-strip \
-			                    CROSS_COMPILE=$CLANG/aarch64-linux-gnu- \
-			                    CROSS_COMPILE_ARM32=$CLANG/arm-linux-gnueabi-
-                    }
-                    clang
-		    exit 0;;
-		--gcc)
-                    function gcc() {
-                            # folder arm64
-                            msg "Path To ARM64 Folder GCC!"
-                            read -e ARM64
-
-                            # folder arm32
-                            msg "Path To ARM32 Folder GCC!"
-                            read -e ARM32
-
-                            # defconfig
-                            msg "Defconfig Kernel!"
-                            read -e DEFCONFIG
-
-                            # host
-                            msg "Host Compiler!"
-                            read -e HOST
-
-                            # user
-                            msg "User Compiler!"
-                            read -e USER
-
-                            # exports
-                            export KBUILD_BUILD_USER=$USER
-                            export KBUILD_BUILD_HOST=$HOST
-
-                            # start built
-                            sleep 1
-                            msg "Starting Build Use GCC"
-                            sleep 1
-                            msg "..."
-                            sleep 1
-                            msg ".."
-                            sleep 1
-                            msg "."
-                            sleep 2
-                            make -j$(nproc) O=out ARCH=arm64 $DEFCONFIG
-                            make -j$(nproc) ARCH=arm64 O=out \
-                                            CROSS_COMPILE=$ARM64/aarch64-linux-gnu- \
-                                            CROSS_COMPILE_ARM32=$ARM32/arm-linux-androideabi-
-                    }
-		    gcc
-		    exit 0;;
-		--version)
-			version; exit 0;;
-		*)
-		    echo "Unknown option: $1. Run 'baka-compile --help' for help."
-		exit 1;;
+    case $1 in
+        -h|--help)
+            usage;;
+        --clang)
+            clang
+            exit 0;;
+        --gcc)
+            gcc
+            exit 0;;
+        --version)
+            version
+            exit 0;;
+        *)
+            echo "Unknown option: $1. Run 'baka-compile --help' for help."
+            exit 1;;
     esac
 done
 
 if [[ -z "$2" ]]; then
-	echo "Not enough arguments. Run 'baka-compile --help' for help."
-	exit 1
+    echo "Not enough arguments. Run 'baka-compile --help' for help."
+    exit 1
 fi
